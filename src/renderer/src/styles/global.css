@@ -1,0 +1,543 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+select {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.15s ease;
+  min-width: 0;
+}
+input:focus,
+select:focus {
+  border-color: var(--bms-accent);
+}
+input:disabled,
+select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+.app-shell {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  overflow: hidden;
+}
+
+.main-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+.page-container {
+  padding: 28px 32px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 20px 22px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1100px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-tile {
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-tile .stat-label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+.stat-tile .stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.stat-tile .stat-unit {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Denser variant for grids that need to pack many tiles into one screen
+   (e.g. the Cell Information summary) - same info, tighter padding/type. */
+.stat-tile-compact {
+  padding: 8px 10px;
+  gap: 2px;
+  /* Sized to content, not stretched - a compact strip packs many of these
+     side by side, and letting each stretch to fill an equal grid column
+     (as the regular grid-4/grid-8 classes do) leaves huge empty boxes when
+     the value is short ("0.00 V"). flex-basis gives a sane minimum so tiles
+     still line up reasonably without being forced wide. */
+  flex: 0 1 auto;
+  min-width: 108px;
+}
+.stat-tile-compact .stat-label {
+  font-size: 10px;
+}
+.stat-tile-compact .stat-value {
+  font-size: 15px;
+}
+.stat-tile-compact .stat-unit {
+  font-size: 10.5px;
+}
+
+/* Wrapping row of compact stat tiles, sized to content instead of stretched
+   across equal grid columns - see .stat-tile-compact above. */
+.stat-tile-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.grid-8 {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+@media (max-width: 1400px) {
+  .grid-8 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .grid-8 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.badge-success {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.badge-success .badge-dot {
+  background: var(--success);
+  box-shadow: 0 0 0 3px var(--success-bg);
+}
+.badge-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+.badge-danger .badge-dot {
+  background: var(--danger);
+}
+.badge-warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+.badge-warning .badge-dot {
+  background: var(--warning);
+}
+.badge-neutral {
+  background: var(--bg-sunken);
+  color: var(--text-muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--accent, var(--bms-accent));
+  color: white;
+}
+.btn-primary:not(:disabled):hover {
+  filter: brightness(1.08);
+}
+.btn-secondary {
+  background: var(--bg-sunken);
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-secondary:not(:disabled):hover {
+  background: var(--border);
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+.btn-ghost:hover {
+  color: var(--text);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.field .field-hint {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-sunken);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+.tab-bar button {
+  border: none;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.tab-bar button.active {
+  background: var(--bg-elevated);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
+.config-field {
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.config-field label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.config-field .config-range {
+  font-size: 10.5px;
+  color: var(--text-faint);
+}
+.config-field .config-value {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.config-field input {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 5px 8px;
+}
+/* Editable state needs to be visually obvious at a glance, not just
+   discoverable by clicking - the field box picks up the accent color as its
+   border/background tint, and the input itself gets a matching border and a
+   faint accent fill so it reads as "live and editable" rather than plain
+   text sitting in a box. */
+.config-field.editing {
+  background: var(--accent-bg, var(--bms-accent-bg));
+  border-color: var(--accent, var(--bms-accent));
+}
+.config-field.editing input {
+  background: var(--bg-elevated);
+  border-color: var(--accent, var(--bms-accent));
+}
+.config-field.editing input:focus {
+  border-color: var(--accent, var(--bms-accent));
+  box-shadow: 0 0 0 3px var(--accent-bg, var(--bms-accent-bg));
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 50px 20px;
+  color: var(--text-faint);
+  text-align: center;
+}
+.empty-state .empty-icon {
+  font-size: 34px;
+  opacity: 0.6;
+}
+
+.light-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--danger);
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.light-dot.on {
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+}
+
+.toast-stack {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+.toast {
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  min-width: 220px;
+  animation: toast-in 0.2s ease;
+}
+.toast.success {
+  background: var(--success);
+}
+.toast.failure {
+  background: var(--danger);
+}
+.toast.info {
+  background: var(--text-muted);
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chart-wrap {
+  position: relative;
+  height: 260px;
+}
+
+.mono {
+  font-family: "Cascadia Code", "Consolas", "SFMono-Regular", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.live-monitor-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 22px;
+  align-items: start;
+}
+/* This page's table (Live Values) has more columns than the rest of the app
+   (Timestamp/Dir/CAN ID/Type/Message/DLC/Data Bytes/Count) - the shared
+   1400px page-container cap left the left column too narrow to fit them
+   without an inner scrollbar, so this page gets more room to work with. */
+.page-container.page-container-wide {
+  max-width: 1680px;
+}
+.message-interpretation-panel {
+  position: sticky;
+  top: 22px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.message-interpretation-panel .raw-monitor-table {
+  table-layout: auto;
+}
+@media (max-width: 1200px) {
+  .live-monitor-split {
+    grid-template-columns: 1fr;
+  }
+  .message-interpretation-panel {
+    position: static;
+    max-height: none;
+  }
+}
+
+.raw-monitor-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.raw-monitor-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--bg-sunken);
+  color: var(--text-faint);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.raw-monitor-table td {
+  padding: 7px 14px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.raw-monitor-table tbody tr:hover {
+  background: var(--bg-sunken);
+}
+.raw-monitor-table td:nth-child(4) {
+  white-space: normal;
+}

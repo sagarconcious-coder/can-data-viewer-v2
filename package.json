@@ -1,0 +1,51 @@
+{
+  "name": "can-data-viewer-pro",
+  "productName": "CAN Data Viewer Pro",
+  "version": "1.0.0",
+  "description": "Standalone Electron + React desktop app for BMS/RBMS CAN diagnostics and configuration",
+  "main": "src/main/main.js",
+  "author": "CAN Data Viewer Pro",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev:renderer": "vite",
+    "build:renderer": "vite build",
+    "start": "npm run build:renderer && electron .",
+    "dev": "concurrently -k \"npm:dev:renderer\" \"npm:electron:dev\"",
+    "electron:dev": "wait-on tcp:5173 && cross-env ELECTRON_START_URL=http://localhost:5173 electron .",
+    "dist": "npm run build:renderer && electron-builder"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.4",
+    "koffi": "^3.1.5",
+    "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "serialport": "^10.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "electron": "^30.5.1",
+    "electron-builder": "^24.13.3",
+    "vite": "^5.4.6",
+    "wait-on": "^8.0.0"
+  },
+  "build": {
+    "appId": "com.candataviewer.pro",
+    "productName": "CAN Data Viewer Pro",
+    "files": [
+      "dist/**/*",
+      "src/main/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  }
+}

@@ -1,0 +1,162 @@
+/*
+ * Theme system: three selectable themes, each with the same variable
+ * contract (--bg, --text, --bms-accent, etc.) so every page/component that
+ * already consumes these vars automatically re-skins with no per-page
+ * changes needed.
+ *
+ *  - "green-light" (default) / "green-dark": Aeidth's green-energy brand -
+ *    a single green accent family used for BOTH BMS and RBMS modes (a
+ *    reusable-energy brand doesn't split into a blue/purple mode split).
+ *  - "classic": the original blue (BMS) / purple-amber (RBMS) palette, kept
+ *    as a selectable option rather than deleted.
+ *
+ * Selected via [data-theme] on <html>, written/read by useTheme.js.
+ */
+
+:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* Aeidth brand green - used for the logo mark and as the accent source
+     for both green themes below. */
+  --brand-green: #1fa651;
+  --brand-green-dark: #0d7a3a;
+  --brand-green-light: #4fd67e;
+}
+
+/* ---------------------------------------------------------------------- */
+/* green-light (default)                                                  */
+/* ---------------------------------------------------------------------- */
+:root,
+:root[data-theme="green-light"] {
+  --bg: #f3f8f4;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #e9f3ea;
+  --border: #d7e8da;
+  --text: #142218;
+  --text-muted: #55705c;
+  --text-faint: #86a08c;
+
+  --shadow-sm: 0 1px 2px rgba(15, 40, 22, 0.06);
+  --shadow-md: 0 4px 16px rgba(15, 40, 22, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 40, 22, 0.12);
+
+  --success: #1c9d63;
+  --success-bg: rgba(28, 157, 99, 0.12);
+  --danger: #d84545;
+  --danger-bg: rgba(216, 69, 69, 0.12);
+  --warning: #c98a1c;
+  --warning-bg: rgba(201, 138, 28, 0.14);
+
+  /* Single green accent family, shared by BMS and RBMS modes. */
+  --bms-accent: #1fa651;
+  --bms-accent-dark: #147a3c;
+  --bms-accent-bg: rgba(31, 166, 81, 0.12);
+  --bms-gradient: linear-gradient(135deg, #1fa651 0%, #7fd858 100%);
+
+  --rbms-accent: #17915a;
+  --rbms-accent-dark: #0f6b42;
+  --rbms-accent-bg: rgba(23, 145, 90, 0.12);
+  --rbms-gradient: linear-gradient(135deg, #17915a 0%, #a9d84a 130%);
+  --rbms-amber: #7fb83a;
+}
+
+/* ---------------------------------------------------------------------- */
+/* green-dark                                                             */
+/* ---------------------------------------------------------------------- */
+:root[data-theme="green-dark"] {
+  --bg: #0a130d;
+  --bg-elevated: #101c14;
+  --bg-sunken: #0d1a10;
+  --border: #1e3324;
+  --text: #eaf6ec;
+  --text-muted: #93b39a;
+  --text-faint: #5f7d66;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+  --success: #3ed88a;
+  --success-bg: rgba(62, 216, 138, 0.16);
+  --danger: #f0605f;
+  --danger-bg: rgba(240, 96, 95, 0.16);
+  --warning: #e3ab3c;
+  --warning-bg: rgba(227, 171, 60, 0.16);
+
+  --bms-accent: #3ed88a;
+  --bms-accent-dark: #6be6a8;
+  --bms-accent-bg: rgba(62, 216, 138, 0.16);
+  --bms-gradient: linear-gradient(135deg, #1fa651 0%, #3ed88a 100%);
+
+  --rbms-accent: #6ad88f;
+  --rbms-accent-dark: #8ee6ab;
+  --rbms-accent-bg: rgba(106, 216, 143, 0.16);
+  --rbms-gradient: linear-gradient(135deg, #17915a 0%, #a9d84a 130%);
+  --rbms-amber: #a9d84a;
+}
+
+/* ---------------------------------------------------------------------- */
+/* classic (original blue / purple-amber)                                 */
+/* ---------------------------------------------------------------------- */
+:root[data-theme="classic"] {
+  --bg: #f4f6fb;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #eaedf5;
+  --border: #dde2ee;
+  --text: #151a26;
+  --text-muted: #5b6478;
+  --text-faint: #8991a3;
+
+  --shadow-sm: 0 1px 2px rgba(20, 24, 38, 0.06);
+  --shadow-md: 0 4px 16px rgba(20, 24, 38, 0.08);
+  --shadow-lg: 0 12px 32px rgba(20, 24, 38, 0.12);
+
+  --success: #1c9d63;
+  --success-bg: rgba(28, 157, 99, 0.12);
+  --danger: #d84545;
+  --danger-bg: rgba(216, 69, 69, 0.12);
+  --warning: #c98a1c;
+  --warning-bg: rgba(201, 138, 28, 0.14);
+
+  --bms-accent: #2f6fed;
+  --bms-accent-dark: #1c4fc0;
+  --bms-accent-bg: rgba(47, 111, 237, 0.1);
+  --bms-gradient: linear-gradient(135deg, #2f6fed 0%, #6a8dff 100%);
+
+  --rbms-accent: #8a4fe0;
+  --rbms-accent-dark: #6a35b8;
+  --rbms-accent-bg: rgba(138, 79, 224, 0.1);
+  --rbms-gradient: linear-gradient(135deg, #8a4fe0 0%, #e0a53f 130%);
+  --rbms-amber: #e0a53f;
+}
+
+:root[data-theme="classic-dark"] {
+  --bg: #0b0f17;
+  --bg-elevated: #141a26;
+  --bg-sunken: #0e1420;
+  --border: #232b3d;
+  --text: #eef1f8;
+  --text-muted: #9aa4bd;
+  --text-faint: #667089;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+  --success: #35c983;
+  --success-bg: rgba(53, 201, 131, 0.16);
+  --danger: #f0605f;
+  --danger-bg: rgba(240, 96, 95, 0.16);
+  --warning: #e3ab3c;
+  --warning-bg: rgba(227, 171, 60, 0.16);
+
+  --bms-accent: #5a8bff;
+  --bms-accent-dark: #7ea1ff;
+  --bms-accent-bg: rgba(90, 139, 255, 0.14);
+
+  --rbms-accent: #a875ec;
+  --rbms-accent-dark: #c39bf5;
+  --rbms-accent-bg: rgba(168, 117, 236, 0.16);
+}
